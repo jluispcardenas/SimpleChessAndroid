@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="jcardenas.com.chess">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!--    android:name="android.support.multidex.MultiDexApplication" -->
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:name="android.support.multidex.MultiDexApplication"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="jcardenas.com.chess.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="false"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="jcardenas.com.chess.activities.GameActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="false"/>
+        <activity android:name="jcardenas.com.chess.activities.SignedInActivity" />
+        <activity android:name="jcardenas.com.chess.activities.ChannelsActivity" android:parentActivityName=".MainActivity" />
+        <activity android:name="jcardenas.com.chess.activities.RoomActivity" android:parentActivityName=".activities.ChannelsActivity"></activity>
+        <activity android:name="jcardenas.com.chess.activities.SettingsActivity" android:parentActivityName=".MainActivity"></activity>
+        <service android:name="jcardenas.com.chess.services.PubnubService" android:exported="false"/>
+        <!-- <receiver
+            android:name=".RoomActivity$RoomBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="jcardenas.com.chess.pub_action" />
+            </intent-filter>
+        </receiver> -->
+
+        <receiver
+            android:name="jcardenas.com.chess.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
+        <service android:name="jcardenas.com.chess.services.GcmIntentService" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+    </application>
+
+</manifest>

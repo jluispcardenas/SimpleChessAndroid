@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference android:title="@string/settings_lastmove"
+        android:defaultValue="true"
+        android:summary=""
+        android:key="lastmove" />
+    <CheckBoxPreference android:title="@string/settings_sounds"
+    android:defaultValue="true"
+    android:summary=""
+    android:key="sounds" />
+<ListPreference     android:title="@string/settings_invitations"
+    android:summary="@string/settings_invitations_desc"
+    android:key="invitations"
+    android:defaultValue="all"
+    android:entries="@array/listArray"
+    android:entryValues="@array/listValues" />
+</PreferenceScreen>

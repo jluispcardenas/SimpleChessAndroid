@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Simple Chess</string>
+    <string name="action_settings">Preferencias</string>
+    <string name="action_contact">Contactanos</string>
+    <string name="action_about">Sobre la app</string>
+    <string name="action_share">Compartir</string>
+    <string name="share_subject">Juega el mejor juego de Ajedrez</string>
+    <string name="share_content">https://play.google.com/store/apps/details?id=jcardenas.com.chess</string>
+    <string name="about_app">Sobre la app!</string>
+    <string name="about_app_desc">Simple Chess @ 2017 - by Empresa Cardenas (empresacardenas@gmail.com)</string>
+    <string name="contact_subject">Contacto desde Ajedrez App</string>
+    <string name="room_availables">Salas disponibles</string>
+    <string name="check">Estas en jaque</string>
+
+    <string name="you_win">FELICIDADES</string>
+    <string name="you_win_desc">Has ganado la partida</string>
+    <string name="you_win_desc_online">Has ganado 25 puntos de experiencia!</string>
+
+    <string name="you_lost">Has perdido</string>
+    <string name="you_lost_desc">Has perdido la partida contra la maquina</string>
+    <string name="you_lost_desc_online">Has perdido la partida</string>
+
+    <string name="quit_game">Abandonar partida</string>
+    <string name="quit_game_desc">Deseas abandonar la partida?</string>
+
+    <string name="win_default">Tu contrincante abandonó la partida. GANASTE!</string>
+
+    <string name="notif_title1">Has sido retado por</string>
+    <string name="notif_desc1">Toca este aviso para aceptar el reto</string>
+
+    <string name="notif_title2">Tu reto ha sido aceptado por</string>
+    <string name="notif_desc2">Toca este aviso para empezar</string>
+
+    <string name="new_player">Nuevo jugador</string>
+
+    <string name="challenge_friend">Retar a un amigo</string>
+    <string name="challenge_friend_desc">Deseas retar a</string>
+
+    <string name="new_challenge">Nuevo Reto</string>
+    <string name="new_challenge_desc">Has sido retado por</string>
+
+    <string name="full_room">Sala llena intenta otra sala</string>
+
+    <string name="settings_lastmove">Destacar última jugada</string>
+    <string name="settings_sounds">Habilitar sonidos</string>
+    <string name="settings_invitations">Recibir invitaciones</string>
+    <string name="settings_invitations_desc">De quién deseas recibir invitaciones</string>
+
+    <string name="vs_phone">CONTRA TELEFONO</string>
+    <string name="vs_online">JUGAR ONLINE</string>
+
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="connect">Conectando...</string>
+    <string name="decline">Declinar</string>
+
+
+    <string name="msg_error">El mensaje no pudo ser enviado</string>
+    <string name="connection_error">Tu contrincante tuvo problemas con la conexión. Juego anulado</string>
+</resources>

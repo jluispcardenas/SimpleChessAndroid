@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Simple Chess</string>
+    <string name="action_settings">Preferences</string>
+    <string name="action_contact">Contact us</string>
+    <string name="action_about">About this app</string>
+    <string name="action_share">Share</string>
+    <string name="share_subject">Play the best chess game</string>
+    <string name="share_content">https://play.google.com/store/apps/details?id=jcardenas.com.chess</string>
+    <string name="about_app">About this app!</string>
+    <string name="about_app_desc">Simple Chess @ 2017 - by Empresa Cardenas (empresacardenas@gmail.com)</string>
+    <string name="contact_subject">Contact from Chess App</string>
+    <string name="room_availables">Rooms availables</string>
+    <string name="check">Check</string>
+
+    <string name="you_win">CONGRATULATIONS</string>
+    <string name="you_win_desc">You win the game</string>
+    <string name="you_win_desc_online">You win 25 exp. points!</string>
+
+    <string name="you_lost">You lost</string>
+    <string name="you_lost_desc">You lost the game</string>
+    <string name="you_lost_desc_online">You lost the game</string>
+
+    <string name="quit_game">Quit game</string>
+    <string name="quit_game_desc">Are you sure?</string>
+
+    <string name="win_default">Your friend quit the game. YOU WIN!</string>
+
+    <string name="notif_title1">You have been challenged by</string>
+    <string name="notif_desc1">Touch this notification to accept the challenge</string>
+
+    <string name="notif_title2">Your challenge has been accepted by</string>
+    <string name="notif_desc2">Touch this notification to start</string>
+
+    <string name="new_player">New player</string>
+
+    <string name="challenge_friend">Challenge a friend</string>
+    <string name="challenge_friend_desc">You want to challenge</string>
+
+    <string name="new_challenge">New challenge</string>
+    <string name="new_challenge_desc">You have been challenged by</string>
+
+    <string name="full_room">Roomful try another room</string>
+
+    <string name="settings_lastmove">Highlight last move</string>
+    <string name="settings_sounds">Enable souds</string>
+    <string name="settings_invitations">Receive invitations</string>
+    <string name="settings_invitations_desc">Who you want to receive invitations</string>
+
+    <string name="vs_phone">VERSUS PHONE</string>
+    <string name="vs_online">PLAY ONLINE</string>
+
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="connect">Connecting...</string>
+    <string name="decline">Decline</string>
+
+
+    <string name="msg_error">The message could not be sent</string>
+    <string name="connection_error">Your opponent had trouble connecting. Game canceled</string>
+</resources>
