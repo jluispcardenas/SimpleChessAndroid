@@ -45,7 +45,7 @@ public class Piece {
             spriteBlack = BoardView.getBitmapFromAsset(biw.getContext(), "images/blackpieces.png");
 
         this.board = biw;
-        this.showLastMove = showLastMove;
+        Piece.showLastMove = showLastMove;
         row = r;
         col = c;
 
@@ -123,7 +123,7 @@ public class Piece {
     {
         int capture[] = {-1};
         int ret = 0;
-        if ((ret = board.validMove(getType(), col, row, c, r, capture, false)) > 0) {
+        if ((ret = BoardView.validMove(getType(), col, row, c, r, capture, false)) > 0) {
             // save move
             if (capture[0] != -1)
                 board.capture(board.getPiece((capture[0]/8), (capture[0]%8)));

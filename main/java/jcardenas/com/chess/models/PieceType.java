@@ -25,4 +25,4 @@ public enum PieceType
     ROOK,
     PAWN,
     UNKNOWN
-};
+}

@@ -138,13 +138,13 @@ public class GameActivity extends BaseActivity {
                 }
                 @Override
                 public void onCheck(PieceColor color) {
-                    if (color == biw.getMainColor()) {
+                    if (color == BoardView.getMainColor()) {
                         Toast.makeText(getApplicationContext(), getString(R.string.check), Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onGameOver(PieceColor color) {
-                    if (color == biw.getMainColor()) {
+                    if (color == BoardView.getMainColor()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                         builder.setTitle(getString(R.string.you_lost)).setMessage(getString(R.string.you_lost_desc_online)).setIcon(android.R.drawable.ic_delete)
                                 .setNeutralButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
@@ -245,7 +245,7 @@ public class GameActivity extends BaseActivity {
                 }
                 @Override
                 public void onCheck(PieceColor color) {
-                    if (color == biw.getMainColor()) {
+                    if (color == BoardView.getMainColor()) {
                         Toast.makeText(getApplicationContext(), getString(R.string.check), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -254,7 +254,7 @@ public class GameActivity extends BaseActivity {
                     int icon = android.R.drawable.star_big_on;
                     String text = getString(R.string.you_win);
                     String desc = getString(R.string.you_win_desc);
-                    if (color == biw.getMainColor()) {
+                    if (color == BoardView.getMainColor()) {
                         icon = android.R.drawable.ic_delete;
                         text = getString(R.string.you_lost);
                         desc = getString(R.string.you_lost_desc);
@@ -351,7 +351,7 @@ public class GameActivity extends BaseActivity {
         }*/
 
         if (mService != null)
-            mService.unsubscribe(getChannel());
+            PubnubService.unsubscribe(getChannel());
         if (receiver != null)
             this.unregisterReceiver(receiver);
 
@@ -444,7 +444,7 @@ public class GameActivity extends BaseActivity {
         static GameActivity activity;
 
         public void setActivity(GameActivity activity) {
-            this.activity = activity;
+            GameBroadcastReceiver.activity = activity;
         }
 
         @Override
@@ -453,17 +453,17 @@ public class GameActivity extends BaseActivity {
             if (action.equals(Constants.NEW_MSG_ACTION)) {
                 // new message action
                 final ChatMessage chatMsg = (ChatMessage)intent.getSerializableExtra("chatMsg");
-                this.activity.runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        GameBroadcastReceiver.this.activity.mChatAdapter.addMessage(chatMsg);
+                        activity.mChatAdapter.addMessage(chatMsg);
                     }
                 });
 
             } else if (action.equals(Constants.MOVE_ACTION)) {
                 final String username = intent.getStringExtra(Constants.JSON_USER);
 
-                if (!username.equals(this.activity.getRival())) return;
+                if (!username.equals(activity.getRival())) return;
 
                 final String move = intent.getStringExtra(Constants.MOVE);
 
@@ -472,7 +472,7 @@ public class GameActivity extends BaseActivity {
                 final Matcher match = r.matcher(move);
                 if (!match.matches()) return;
 
-                this.activity.runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         int acol = fix(Integer.parseInt(match.group(1)));
@@ -480,14 +480,14 @@ public class GameActivity extends BaseActivity {
                         int bcol = fix(Integer.parseInt(match.group(3)));
                         int brow = fix(Integer.parseInt(match.group(4)));
                         Piece pc;
-                        if ((pc = GameBroadcastReceiver.this.activity.biw.getPiece(acol, arow)) != null)
+                        if ((pc = activity.biw.getPiece(acol, arow)) != null)
                         {
-                            if (pc.getColor() != GameBroadcastReceiver.this.activity.biw.getMainColor()) {
+                            if (pc.getColor() != BoardView.getMainColor()) {
                                 pc.move(bcol, brow);
-                                GameBroadcastReceiver.this.activity.biw.invalidate();
+                                activity.biw.invalidate();
 
                                 Move move = new Move(arow*8+acol, brow*8+bcol, 0, -1);
-                                GameBroadcastReceiver.this.activity.biw.onMove(move);
+                                activity.biw.onMove(move);
                             }
                         }
                     }
@@ -505,32 +505,32 @@ public class GameActivity extends BaseActivity {
                 final String _action = intent.getStringExtra("_action");
                 final JSONObject _data = data;
 
-                if (_action.equals("timeout") && user.equals(GameBroadcastReceiver.this.activity.getRival())) {
-                    GameBroadcastReceiver.this.activity.runOnUiThread(new Runnable() {
+                if (_action.equals("timeout") && user.equals(activity.getRival())) {
+                    activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(GameBroadcastReceiver.this.activity.getApplicationContext(), GameBroadcastReceiver.this.activity.getString(R.string.connection_error), Toast.LENGTH_LONG).show();
-                            GameBroadcastReceiver.this.activity.finish();
+                            Toast.makeText(activity.getApplicationContext(), activity.getString(R.string.connection_error), Toast.LENGTH_LONG).show();
+                            activity.finish();
                         }
                     });
-                } else if (_action.equals("leave") && user.equals(GameBroadcastReceiver.this.activity.getRival()) && !GameBroadcastReceiver.this.activity.biw.isGameOver()) {
-                    GameBroadcastReceiver.this.activity.runOnUiThread(new Runnable() {
+                } else if (_action.equals("leave") && user.equals(activity.getRival()) && !activity.biw.isGameOver()) {
+                    activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(GameBroadcastReceiver.this.activity.getApplicationContext(), GameBroadcastReceiver.this.activity.getString(R.string.win_default), Toast.LENGTH_LONG).show();
-                            GameBroadcastReceiver.this.activity.biw.onGameOver((GameBroadcastReceiver.this.activity.biw.getMainColor() == PieceColor.BLACK ? PieceColor.WHITE : PieceColor.BLACK));
+                            Toast.makeText(activity.getApplicationContext(), activity.getString(R.string.win_default), Toast.LENGTH_LONG).show();
+                            activity.biw.onGameOver((BoardView.getMainColor() == PieceColor.BLACK ? PieceColor.WHITE : PieceColor.BLACK));
                         }
                     });
                 }
 
-                this.activity.runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        GameBroadcastReceiver.this.activity.mChatAdapter.userPresence(user, _action);
-                        GameBroadcastReceiver.this.activity.mOnlineAdapter.updateAction(user, _action, _data);
+                        activity.mChatAdapter.userPresence(user, _action);
+                        activity.mOnlineAdapter.updateAction(user, _action, _data);
 
                         try {
-                            int occ = GameBroadcastReceiver.this.activity.mOnlineAdapter.getItemCount();
+                            int occ = activity.mOnlineAdapter.getItemCount();
                           //  GameBroadcastReceiver.this.activity.getSupportActionBar().setTitle(GameBroadcastReceiver.this.activity.getChannel() + " (" + occ + ")");
                         }catch (Exception e) {
                         }
@@ -558,7 +558,7 @@ public class GameActivity extends BaseActivity {
                         JSONObject jobj = hereNowJSON.getJSONObject(i);
                         String uuid = jobj.getString("uuid");
 
-                        if (uuid.equals(this.activity.currentUser.getEmail())) continue;
+                        if (uuid.equals(activity.currentUser.getEmail())) continue;
 
                         String displayName = null;
                         try {
@@ -574,11 +574,11 @@ public class GameActivity extends BaseActivity {
 
                     final int occ = listUsers.size();
 
-                    this.activity.runOnUiThread(new Runnable() {
+                    activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            GameBroadcastReceiver.this.activity.mChatAdapter.setOnlineNow(usersOnline);
-                            GameBroadcastReceiver.this.activity.mOnlineAdapter.setUsers(listUsers);
+                            activity.mChatAdapter.setOnlineNow(usersOnline);
+                            activity.mOnlineAdapter.setUsers(listUsers);
                             /*try {
                                 GameBroadcastReceiver.this.activity.getSupportActionBar().setTitle(GameBroadcastReceiver.this.activity.getChannel() + " (" + occ + ")");
                             }catch (Exception e) {

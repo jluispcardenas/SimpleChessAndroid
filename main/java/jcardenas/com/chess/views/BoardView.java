@@ -147,7 +147,7 @@ public class BoardView extends View {
             restart();
         else {
             for (Integer key : _pieces.keySet()) {
-                Piece pc = (Piece)_pieces.get(key);
+                Piece pc = _pieces.get(key);
                 pc.changeType(pc.getType());
             }
         }
@@ -160,7 +160,7 @@ public class BoardView extends View {
             _board[(i/8)][(i%8)] = '\0';
 
         for (Integer key : _pieces.keySet()) {
-            Piece pc = (Piece)_pieces.get(key);
+            Piece pc = _pieces.get(key);
             pc.remove();
         }
         _pieces.clear();

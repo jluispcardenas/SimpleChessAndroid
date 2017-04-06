@@ -62,7 +62,7 @@ public class ChannelsActivity extends BaseActivity {
         super.onStart();
 
         try {
-            String newTitle = (String)getString(R.string.room_availables) + " - " + getString(R.string.app_name);
+            String newTitle = getString(R.string.room_availables) + " - " + getString(R.string.app_name);
             getSupportActionBar().setTitle(newTitle);
         } catch (Exception e) {
 

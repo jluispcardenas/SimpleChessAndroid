@@ -97,8 +97,8 @@ public class PubnubService extends Service {
         }
 
         if (mPubNub == null) {
-            this.mPubNub = new Pubnub(Constants.PUBLISH_KEY, Constants.SUBSCRIBE_KEY);
-            this.mPubNub.setUUID(currentUser.getEmail());
+            mPubNub = new Pubnub(Constants.PUBLISH_KEY, Constants.SUBSCRIBE_KEY);
+            mPubNub.setUUID(currentUser.getEmail());
 
             gcmRegister();
         }
@@ -268,7 +268,7 @@ public class PubnubService extends Service {
 
     public void hereNow(String channel, final boolean displayUsers) {
 
-        this.mPubNub.hereNow(channel, true, true, new Callback() {
+        mPubNub.hereNow(channel, true, true, new Callback() {
             @Override
             public void successCallback(String channel, Object response) {
                 try {
@@ -315,7 +315,7 @@ public class PubnubService extends Service {
             state.put(Constants.STATE_PHOTO_URL, currentUser.getPhotoUrl());
             state.put(Constants.STATE_SCORE, Score.getScore(this));
 
-            this.mPubNub.setState(channel, this.mPubNub.getUUID(), state, callback);
+            mPubNub.setState(channel, mPubNub.getUUID(), state, callback);
         } catch (JSONException e) { e.printStackTrace(); }
     }
 
@@ -360,7 +360,7 @@ public class PubnubService extends Service {
         };
         try {
 
-            this.mPubNub.presence(channel, callback);
+            mPubNub.presence(channel, callback);
 
         } catch (PubnubException e) { e.printStackTrace(); }
     }
@@ -442,7 +442,7 @@ public class PubnubService extends Service {
     }
 
     private void sendRegistrationId(String regId) {
-        this.mPubNub.enablePushNotificationsOnChannel(currentUser.getEmail(), regId, new BasicCallback());
+        mPubNub.enablePushNotificationsOnChannel(currentUser.getEmail(), regId, new BasicCallback());
     }
 
     private void gcmRegister() {

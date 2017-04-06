@@ -23,4 +23,4 @@ public enum Mode {
     HUMAN_ONLINE,
     REPLAY,
     UNSTARTED
-};
+}

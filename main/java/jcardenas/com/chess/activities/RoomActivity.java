@@ -218,7 +218,7 @@ public class RoomActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         if (mBound) {
-            getService().unsubscribe(this.channel);
+            PubnubService.unsubscribe(this.channel);
             unbindService(mServiceConnection);
             mBound = false;
         }
@@ -289,7 +289,7 @@ public class RoomActivity extends BaseActivity {
         mOnlineAdapter.setOnItemClickListener(new OnlineAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View view) {
-                User item = (User)mOnlineAdapter.getValues().get(position);
+                User item = mOnlineAdapter.getValues().get(position);
                 final String toUser = item.getUsername();
                 final String toDisplayName = item.getDisplayName();
 
@@ -363,7 +363,7 @@ public class RoomActivity extends BaseActivity {
         static RoomActivity activity;
 
         public void setActivity(RoomActivity activity) {
-            this.activity = activity;
+            RoomBroadcastReceiver.activity = activity;
         }
 
         @Override
@@ -375,10 +375,10 @@ public class RoomActivity extends BaseActivity {
             if (action.equals(Constants.NEW_MSG_ROOM_ACTION)) {
                 // new message action
                 final ChatMessage chatMsg = (ChatMessage)intent.getSerializableExtra("chatMsg");
-                this.activity.runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        RoomBroadcastReceiver.this.activity.mChatAdapter.addMessage(chatMsg);
+                        activity.mChatAdapter.addMessage(chatMsg);
                     }
                 });
 
@@ -386,21 +386,21 @@ public class RoomActivity extends BaseActivity {
                 // new invitation
                 final String from = intent.getStringExtra(Constants.GCM_INVITATION_FROM);
                 final String fromname = intent.getStringExtra(Constants.GCM_INVITATION_FROM_NAME);
-                this.activity.runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(RoomBroadcastReceiver.this.activity);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                         builder
-                                .setTitle(RoomBroadcastReceiver.this.activity.getString(R.string.new_challenge))
-                                .setMessage(RoomBroadcastReceiver.this.activity.getString(R.string.new_challenge_desc) + " " + fromname)
+                                .setTitle(activity.getString(R.string.new_challenge))
+                                .setMessage(activity.getString(R.string.new_challenge_desc) + " " + fromname)
                                 .setIcon(android.R.drawable.ic_dialog_info)
-                                .setPositiveButton(RoomBroadcastReceiver.this.activity.getString(R.string.accept), new DialogInterface.OnClickListener() {
+                                .setPositiveButton(activity.getString(R.string.accept), new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        RoomBroadcastReceiver.this.activity.sendAccepted(from, "black");
-                                        RoomBroadcastReceiver.this.activity.acceptInvitation(from, fromname, "white");
+                                        activity.sendAccepted(from, "black");
+                                        activity.acceptInvitation(from, fromname, "white");
                                     }
                                 })
-                                .setNegativeButton(RoomBroadcastReceiver.this.activity.getString(R.string.decline), new DialogInterface.OnClickListener() {
+                                .setNegativeButton(activity.getString(R.string.decline), new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
 
                                     }
@@ -416,18 +416,18 @@ public class RoomActivity extends BaseActivity {
                 final String fromname = intent.getStringExtra(Constants.GCM_INVITATION_FROM_NAME);
                 final String choose = intent.getStringExtra(Constants.CHOOSE);
 
-                this.activity.acceptInvitation(from, fromname, choose);
+                activity.acceptInvitation(from, fromname, choose);
 
             } else if (action.equals(Constants.FULL_ROOM_ACTION)) {
                 // full room action
-                this.activity.runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(RoomBroadcastReceiver.this.activity.getBaseContext(),
-                                RoomBroadcastReceiver.this.activity.getString(R.string.full_room), Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity.getBaseContext(),
+                                activity.getString(R.string.full_room), Toast.LENGTH_LONG).show();
                     }
                 });
-                this.activity.finish();
+                activity.finish();
             } else if (action.equals(Constants.HERE_NOW_ACTION)) {
                 // here now
                 String jsonString = intent.getStringExtra("json");
@@ -450,7 +450,7 @@ public class RoomActivity extends BaseActivity {
                         JSONObject jobj = hereNowJSON.getJSONObject(i);
                         String uuid = jobj.getString("uuid");
 
-                        if (uuid.equals(this.activity.currentUser.getEmail())) continue;
+                        if (uuid.equals(activity.currentUser.getEmail())) continue;
 
                         String displayName = null;
                         String photoUrl = null;
@@ -471,14 +471,14 @@ public class RoomActivity extends BaseActivity {
 
                     final int occ = listUsers.size();
 
-                    this.activity.runOnUiThread(new Runnable() {
+                    activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
 
-                            RoomBroadcastReceiver.this.activity.mChatAdapter.setOnlineNow(usersOnline);
-                            RoomBroadcastReceiver.this.activity.mOnlineAdapter.setUsers(listUsers);
+                            activity.mChatAdapter.setOnlineNow(usersOnline);
+                            activity.mOnlineAdapter.setUsers(listUsers);
                             try {
-                                RoomBroadcastReceiver.this.activity.getSupportActionBar().setTitle(RoomBroadcastReceiver.this.activity.getChannel() + " (" + occ + ")");
+                                activity.getSupportActionBar().setTitle(activity.getChannel() + " (" + occ + ")");
                             }catch (Exception e) {
                             }
                         }
@@ -499,20 +499,20 @@ public class RoomActivity extends BaseActivity {
                     return;
                 }
 
-                if (user.equals(this.activity.currentUser.getEmail())) return;
+                if (user.equals(activity.currentUser.getEmail())) return;
 
                 final String _action = intent.getStringExtra("_action");
                 final JSONObject _data = data;
 
-                this.activity.runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        RoomBroadcastReceiver.this.activity.mChatAdapter.userPresence(user, _action);
-                        RoomBroadcastReceiver.this.activity.mOnlineAdapter.updateAction(user, _action, _data);
+                        activity.mChatAdapter.userPresence(user, _action);
+                        activity.mOnlineAdapter.updateAction(user, _action, _data);
 
                         try {
-                            int occ = RoomBroadcastReceiver.this.activity.mOnlineAdapter.getItemCount();
-                            RoomBroadcastReceiver.this.activity.getSupportActionBar().setTitle(RoomBroadcastReceiver.this.activity.getChannel() + " (" + occ + ")");
+                            int occ = activity.mOnlineAdapter.getItemCount();
+                            activity.getSupportActionBar().setTitle(activity.getChannel() + " (" + occ + ")");
                         } catch (Exception e) {
                         }
                     }
@@ -520,7 +520,7 @@ public class RoomActivity extends BaseActivity {
             }
 
         }
-    };
+    }
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
