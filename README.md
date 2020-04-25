@@ -14,7 +14,7 @@ Level up and share your progress!
 https://play.google.com/store/apps/details?id=jcardenas.com.chess&hl=en
 
 
-[!Screen](/ss.webp)
+![Screen](/ss.webp)
 
 
 
