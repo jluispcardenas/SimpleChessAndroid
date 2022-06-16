@@ -1,9 +1,18 @@
 # SimpleChessAndroid
 
+<a href="https://www.linkedin.com/in/jose-luis-cardenas-54366983"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>    <a href="https://leetcode.com/user6694X/"><img src="https://img.shields.io/badge/-LeetCode-FFA116?style=for-the-badge&logo=LeetCode&logoColor=black" /></a>     <a href="mailto:jluispcardenas@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"></a>
+
 Native Android Chess Game
 
 Play Chess Online with your friends or against your phone in a simple way.
 Level up and share your progress!
+
+Some of the features:
+- Play against the computer
+- Play online with friends
+- Ranking system
+- GOT inspired chat channels
+- Social login
 
 
 *SimpleChess* is a fully *Open Source*
